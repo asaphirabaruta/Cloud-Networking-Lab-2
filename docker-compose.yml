@@ -1,0 +1,45 @@
+version: '3'
+services:
+  DATABASE:
+      image: pg-db
+      container_name: DATABASE
+      restart: always
+      ports:
+        - "4321:5432"
+      volumes:
+        - pg-data:/var/lib/postgresql/data
+      environment:
+        - POSTGRES_PASSWORD=password
+      networks:
+        - FULLSTACK
+
+  FRONTEND:
+    image: my-web
+    container_name: FRONTEND
+    restart: always
+    ports:
+      - "8080:80"
+    networks:
+      - FULLSTACK
+    
+  
+  BACKEND:
+    image: my-nodejs
+    container_name: BACKEND
+    ports:
+      - "3001:3001"
+    networks:
+      - FULLSTACK
+    
+
+networks:
+  FULLSTACK:
+    name: FULLSTACK
+    external: true
+      
+
+volumes:
+  pg-data:    
+    external: true 
+      
+
